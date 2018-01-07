@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	        http://www.springframework.org/schema/aop
+	        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+    <!-- 切换使用多数据源 -->
+    <!-- 配置拦截规则, 拦截 DAO层所有方法 -->
+    <bean id="dataSourceAspect" class="cn.com.dom4j.base.dynamic.DataSourceAspect" />
+
+    <aop:config>
+        <aop:aspect ref="dataSourceAspect">
+            <aop:pointcut id="dataSourcePointcut" expression="execution(* cn.com.dom4j.base.dao.mapper.*.*(..))" />
+            <aop:before pointcut-ref="dataSourcePointcut" method="intercept" />
+        </aop:aspect>
+    </aop:config>
+
+
+
+
+
+
+</beans>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.dom4j.base.dao.mapper.ProductMapper">
+
+    <resultMap id="product_result_map" type="cn.com.dom4j.base.model.Product">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="cost" column="cost" />
+        <result property="price" column="price" />
+        <result property="factory" column="factory" />
+        <result property="imageUrl" column="imageUrl" />
+        <result property="createTime" column="createTime" />
+        <result property="valid" column="valid" />
+    </resultMap>
+
+
+    <sql id="select_all_product">
+        SELECT
+            id, name, cost, price, factory, imageUrl, createTime, valid
+        FROM
+          product
+    </sql>
+
+    <insert id="addProduct" parameterType="cn.com.dom4j.base.model.Product" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO product
+          (name, cost, price, factory, imageUrl, createTime, valid)
+        VALUE
+          (#{name}, #{cost}, #{price}, #{factory}, #{imageUrl}, #{createTime}, #{valid})
+    </insert>
+
+    <update id="updateProduct">
+        UPDATE
+          product
+        <set>
+            <if test="name != null and name.trim().length() > 0">
+                name = #{name},
+            </if>
+            <if test="cost != null and cost > 0 ">
+                cost = #{cost},
+            </if>
+            <if test="price != null and price > 0 ">
+                price = #{price},
+            </if>
+            <if test="factory != null and factory.trim().length > 0 ">
+                factory = #{factory},
+            </if>
+            <if test="imageUrl != null and imageUrl.trim().length > 0 ">
+                imageUrl = #{imageUrl},
+            </if>
+            <if test="createTime != null">
+                createTime = #{createTime},
+            </if>
+            <if test="valid != null and valid.trim().length() ">
+                valid = #{valid}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteProductById" parameterType="int">
+        DELETE FROM product WHERE id = #{id}
+    </delete>
+
+    <select id="getProductById" resultType="cn.com.dom4j.base.model.Product" parameterType="int">
+        <include refid="select_all_product" />
+        WHERE
+          id = #{id}
+    </select>
+
+    <select id="getProductListByName" resultType="cn.com.dom4j.base.model.Product" parameterType="string">
+        <include refid="select_all_product" />
+        WHERE
+          name = #{name}
+    </select>
+
+    <select id="getAllProduct" resultType="cn.com.dom4j.base.model.Product">
+        <include refid="select_all_product" />
+    </select>
+
+    <select id="countProduct" resultType="java.lang.Integer">
+        SELECT
+          count(1)
+        FROM
+          product
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="params.name != null and params.name.trim().length > 0 ">
+                AND name = #{params.name}
+            </if>
+            <if test="params.valid != null and params.valid.trim().length() > 0 ">
+                AND valid = #{params.valid}
+            </if>
+        </trim>
+    </select>
+
+    <select id="listProduct" resultType="cn.com.dom4j.base.model.Product">
+        <include refid="select_all_product" />
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="params.name != null and params.name.trim().length > 0 ">
+                AND name = #{params.name}
+            </if>
+            <if test="params.valid != null and params.valid.trim().length() > 0 ">
+                AND valid = #{params.valid}
+            </if>
+        </trim>
+        <choose>
+            <when test="sidx != null and sidx.length() > 0">
+                ORDER BY ${sidx}
+            </when>
+            <otherwise>
+                ORDER BY id
+            </otherwise>
+        </choose>
+        ${sord} limit #{start}, #{rows}
+    </select>
+
+
+</mapper>
