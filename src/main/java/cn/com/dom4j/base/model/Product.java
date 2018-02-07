@@ -81,4 +81,18 @@ public class Product {
     public void setCost(int cost) {
         this.cost = cost;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", cost=" + cost +
+                ", price=" + price +
+                ", factory='" + factory + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", createTime=" + createTime +
+                ", valid='" + valid + '\'' +
+                '}';
+    }
 }

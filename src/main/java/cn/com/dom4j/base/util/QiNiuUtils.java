@@ -1,4 +1,4 @@
-package cn.com.dom4j.base.utils;
+package cn.com.dom4j.base.util;
 
 import cn.com.dom4j.base.config.QiNiuConfig;
 import com.qiniu.api.io.IoApi;

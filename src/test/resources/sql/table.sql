@@ -46,31 +46,6 @@ CREATE TABLE product_category(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品分类对应表';
 
 
-DROP TABLE IF EXISTS manager;
-CREATE TABLE manager(
-  id INT PRIMARY KEY AUTO_INCREMENT COMMENT '编号',
-  username VARCHAR(64) NOT NULL COMMENT '用户名',
-  password VARCHAR(128) NOT NULL COMMENT '密码',
-  phone VARCHAR(24) NOT NULL COMMENT '手机号',
-  email VARCHAR(56) NOT NULL COMMENT '邮箱',
-  valid ENUM('Y', 'N') COMMENT '是否有效',
-  lastLoinTime DATETIME COMMENT '最后登录时间',
-  createTime DATETIME COMMENT '创建时间',
-  UNIQUE KEY idx_uname (username)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT= '后台工作人员表';
-
-DROP TABLE IF EXISTS role;
-CREATE TABLE role(
-  id INT PRIMARY KEY AUTO_INCREMENT COMMENT '编号',
-  name VARCHAR(64) NOT NULL COMMENT '角色名称',
-  description VARCHAR(128) COMMENT '角色描述',
-  valid ENUM('Y', 'N') COMMENT '是否有效',
-  createTime DATETIME COMMENT '创建时间'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT= '角色表';
 
 
-DROP TABLE IF EXISTS manager_role;
-CREATE TABLE manager_role(
-  id INT PRIMARY KEY AUTO_INCREMENT COMMENT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT= '后台用户-角色对应关系表';
 

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath*:db/db.properties"/>
+
+    <bean id="abstractDataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driver}" />
+        <property name="initialSize" value="15" />							<!-- 初始化连接数 -->
+        <property name="minIdle" value="20" />								<!-- 最小空闲连接数 -->
+        <property name="maxIdle" value="50" />								<!-- 最大空闲连接数 -->
+        <property name="maxTotal" value="60" />						    	<!-- 最大连接数 -->
+        <property name="maxWaitMillis" value="10000" />						<!-- 最大获取连接池连接等待时间(毫秒) -->
+        <property name="logAbandoned" value="true" />						<!-- 是否在自动回收超时连接的时候打印连接的超时错误 -->
+        <property name="testWhileIdle" value="true" />						<!-- 空闲时是否验证, 若不通过断掉连接, 前提是空闲对象回收器开启状态 -->
+        <property name="removeAbandonedOnBorrow" value="true" />			<!-- 是否自动回收超时连接 -->
+        <property name="removeAbandonedTimeout" value="180" />				<!-- 超时时间(秒) -->
+        <property name="timeBetweenEvictionRunsMillis" value="1800000" />	<!-- 空闲对象回收器由运行间隔(毫秒)，若需要回收, 该值最好小于 minEvictableIdleTimeMillis值 -->
+        <property name="minEvictableIdleTimeMillis" value="3600000" />      <!-- 被空闲对象回收器回收前在池中保持空闲状态的最小时间(毫秒) -->
+    </bean>
+
+    <bean id="baseDataSource" class="org.apache.commons.dbcp2.BasicDataSource" parent="abstractDataSource">
+        <property name="url" value="${jdbc.base.url}"/>
+        <property name="username" value="${jdbc.base.username}"/>
+        <property name="password" value="${jdbc.base.password}"/>
+    </bean>
+
+    <bean id="kcsjDataSource" class="org.apache.commons.dbcp2.BasicDataSource" parent="abstractDataSource">
+        <property name="url" value="${jdbc.kcsj.url}"/>
+        <property name="username" value="${jdbc.kcsj.username}"/>
+        <property name="password" value="${jdbc.kcsj.password}"/>
+    </bean>
+
+    <bean id="dynamicDataSource" class="cn.com.dom4j.base.dynamic.DynamicDataSource">
+        <property name="targetDataSources">
+            <map key-type="java.lang.String">
+                <entry key="kcsjDataSource" value-ref="kcsjDataSource" />
+                <entry key="baseDataSource" value-ref="baseDataSource" />
+            </map>
+        </property>
+        <property name="defaultTargetDataSource" ref="baseDataSource" />
+    </bean>
+
+</beans>

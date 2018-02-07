@@ -7,7 +7,7 @@ import cn.com.dom4j.base.model.User;
 import cn.com.dom4j.base.service.IProductService;
 import cn.com.dom4j.base.service.IUserService;
 import cn.com.dom4j.base.util.JsonUtils;
-import cn.com.dom4j.base.utils.QiNiuUtils;
+import cn.com.dom4j.base.util.QiNiuUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.commons.lang3.StringUtils;
@@ -48,49 +48,49 @@ public class FurnitureController extends BaseController {
         List<Product> products = productService.getAllProduct();
         modelMap.put("products", products);
 
-        return new ModelAndView("/index", modelMap);
+        return new ModelAndView("/product/index", modelMap);
     }
 
     @RequestMapping("/about")
     public ModelAndView about(HttpServletRequest request, ModelMap modelMap) {
         putServerPath(request, modelMap);
-        return new ModelAndView("/about", modelMap);
+        return new ModelAndView("/product/about", modelMap);
     }
 
     @RequestMapping("/contact")
     public ModelAndView contact(HttpServletRequest request, ModelMap modelMap) {
         putServerPath(request, modelMap);
-        return new ModelAndView("/contact", modelMap);
+        return new ModelAndView("/product/contact", modelMap);
     }
 
     @RequestMapping("/product")
     public ModelAndView product(HttpServletRequest request, ModelMap modelMap) {
         putServerPath(request, modelMap);
-        return new ModelAndView("/product", modelMap);
+        return new ModelAndView("/product/product", modelMap);
     }
 
     @RequestMapping("/single-product")
     public ModelAndView singleProduct(HttpServletRequest request, ModelMap modelMap) {
         putServerPath(request, modelMap);
-        return new ModelAndView("/single-product", modelMap);
+        return new ModelAndView("/product/single-product", modelMap);
     }
 
     @RequestMapping("/login")
     public ModelAndView login(HttpServletRequest request, ModelMap modelMap) {
         putServerPath(request, modelMap);
-        return new ModelAndView("/login", modelMap);
+        return new ModelAndView("/product/login", modelMap);
     }
 
     @RequestMapping("/register")
     public ModelAndView register(HttpServletRequest request, ModelMap modelMap) {
         putServerPath(request, modelMap);
-        return new ModelAndView("/register", modelMap);
+        return new ModelAndView("/product/register", modelMap);
     }
 
     @RequestMapping("/forget-password")
     public ModelAndView forgetPassword(HttpServletRequest request, ModelMap modelMap) {
         putServerPath(request, modelMap);
-        return new ModelAndView("/forget-password", modelMap);
+        return new ModelAndView("/product/forget-password", modelMap);
     }
 
     @ResponseBody
@@ -158,7 +158,7 @@ public class FurnitureController extends BaseController {
     @RequestMapping("/product-manage")
     public ModelAndView productManage(HttpServletRequest request, ModelMap modelMap) {
         putServerPath(request, modelMap);
-        return new ModelAndView("/product-manage", modelMap);
+        return new ModelAndView("/product/product-manage", modelMap);
     }
 
     @ResponseBody

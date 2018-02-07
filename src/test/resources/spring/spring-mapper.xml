@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+	        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!--mapper扫描器-->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!--扫描包路径, 如果需要扫描多个中间中半角逗号隔开-->
+		<!--mapper.java 和 mapper.xml不在同一个目录下-->
+		<property name="basePackage" value="cn.com.dom4j.base.dao.mapper"/>
+
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+	</bean>
+
+	<!--spring 和 mybatis整合, jar包由 mybatis提供-->
+	<!--配置 sqlSessionFactory-->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!--数据库连接池-->
+		<property name="dataSource" ref="dynamicDataSource"/>
+		<!--扫描 mapper.xml-->
+		<property name="mapperLocations" value="classpath:cn/com/dom4j/base/dao/mapper/config/*.xml" />
+	</bean>
+
+
+
+
+
+
+</beans>
